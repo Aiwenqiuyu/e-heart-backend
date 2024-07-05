@@ -35,6 +35,5 @@ module.exports = (sequelize) => {
     tableName: 'food_purge_logs',
     timestamps: true,
   });
-
   return FoodPurgeLog;
 };

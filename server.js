@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-const mysql = require('mysql2/promise'); // Ensure mysql2/promise is imported
-const db = require('./models'); // Import Sequelize instance
+//const port = 3306;
+const mysql = require('mysql2/promise'); // 确保导入 mysql2/promise
+const db = require('./models'); // 导入 Sequelize 实例
+
 
 // Import routes
 const userRoutes = require('./routes/userRoutes');
 const dietLogRoutes = require('./routes/dietLogRoutes');
+const mealPlanRoutes = require('./routes/mealPlanRoutes');
 const foodPurgeLogRoutes = require('./routes/foodPurgeLogRoutes');
 const dietLogReflectionRoutes = require('./routes/dietLogReflectionRoutes');
 
@@ -14,18 +17,35 @@ const dietLogReflectionRoutes = require('./routes/dietLogReflectionRoutes');
 app.use(express.json());
 
 // Setup routes
-console.log('1111111111');
 app.use('/api/users', userRoutes);
-console.log('2222');
 app.use('/api/diet_logs', dietLogRoutes);
 app.use('/api/food_purge_logs', foodPurgeLogRoutes);
+app.use('/api/meal_plans', mealPlanRoutes);
+// app.use('/api/impulse_records', impulseRecordRoutes);
+// app.use('/api/impulse_strategies', impulseStrategyRoutes);
 app.use('/api/diet_log_reflections', dietLogReflectionRoutes);
-console.log('33333');
+//app.use('/api/meal_plan_reflections', mealPlanReflectionRoutes);
+// app.use('/api/impulse_record_reflections', impulseRecordReflectionRoutes);
 
-// Database connection configuration
-const sequelizeConfig = require('./config/database.js').development;
+// 配置数据库连接
+const sequelizeConfig = require('./config/database.js').test;
+// const connection = mysql.createConnection({
+//   host: 'localhost', // 数据库服务器地址
+//   user: 'root', // 数据库用户名
+//   password: 'Wsr413..', // 数据库用户密码
+//   database: 'testdatabase' // 要连接的数据库名称
+// });
 
-// Define createDatabase function
+// // 连接到数据库
+// connection.connect((err) => {
+//   if (err) {
+//     console.error('连接失败: ' + err.stack);
+//     return;
+//   }
+
+//   console.log('连接成功，连接ID ' + connection.threadId);
+// });
+// 定义 createDatabase 函数
 async function createDatabase() {
   console.log(`Connecting to MySQL with user: ${sequelizeConfig.username} and password: ${sequelizeConfig.password}`);
 
@@ -38,12 +58,15 @@ async function createDatabase() {
 
   // Create database if it doesn't exist
   await connection.query(`CREATE DATABASE IF NOT EXISTS \`${sequelizeConfig.database}\`;`);
+  console.log('连接成功，连接ID ' + connection.threadId);
   await connection.end();
 }
 
 // Create database and start server
 createDatabase().then(() => {
   // Sync models
+
+  // 同步模型
   db.sequelize.sync({ force: false }).then(() => {
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);

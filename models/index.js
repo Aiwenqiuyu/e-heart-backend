@@ -5,7 +5,7 @@ const UserModel = require('./user');
 const DietLogModel = require('./dietLog');
 const FoodPurgeLogModel = require('./foodPurgeLog');
 const DietLogReflectionModel = require('./dietLogReflection');
-
+const MealPlan = require('./mealPlan');
 const User = UserModel(sequelize, Sequelize);
 const DietLog = DietLogModel(sequelize, Sequelize);
 const FoodPurgeLog = FoodPurgeLogModel(sequelize, Sequelize);
@@ -33,6 +33,7 @@ module.exports = {
   Sequelize,
   User,
   DietLog,
+  MealPlan,
   FoodPurgeLog,
   DietLogReflection,
 };

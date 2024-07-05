@@ -1,11 +1,22 @@
-exports.successResponse = (message, data) => ({
-    status: 'success',
-    message,
-    data,
-  });
+// response.js
+const successResponse = (message, data) => {
+    return {
+      success: true,
+      message: message,
+      data: data
+    };
+  };
   
-  exports.errorResponse = (message) => ({
-    status: 'error',
-    message,
-  });
+  const errorResponse = (message, data) => {
+    return {
+      success: false,
+      message: message,
+      data: data
+    };
+  };
+  
+  module.exports = {
+    successResponse,
+    errorResponse
+  };
   

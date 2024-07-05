@@ -48,6 +48,5 @@ module.exports = (sequelize) => {
     tableName: 'users',
     timestamps: true,
   });
-
   return User;
 };

@@ -3,6 +3,7 @@ const UserModel = require('./models/user');
 const DietLogModel = require('./models/dietLog');
 const FoodPurgeLogModel = require('./models/foodPurgeLog');
 const DietLogReflectionModel = require('./models/dietLogReflection');
+const MealPlanModel = require('./models/mealPlan');
 
 const sequelize = new Sequelize('database_test', 'root', 'password', {
   host: '127.0.0.1',
@@ -12,6 +13,7 @@ const sequelize = new Sequelize('database_test', 'root', 'password', {
 
 const User = UserModel(sequelize, DataTypes);
 const DietLog = DietLogModel(sequelize, DataTypes);
+const MealPlan = MealPlanModel(sequelize, DataTypes);
 const FoodPurgeLog = FoodPurgeLogModel(sequelize, DataTypes);
 const DietLogReflection = DietLogReflectionModel(sequelize, DataTypes);
 
@@ -53,6 +55,7 @@ module.exports = {
   sequelize,
   User,
   DietLog,
+  MealPlan,
   FoodPurgeLog,
   DietLogReflection,
 };

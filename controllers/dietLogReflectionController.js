@@ -49,6 +49,15 @@ class DietLogReflectionController {
       res.status(500).json({ error: error.message });
     }
   }
+  async getDietingDayOfWeek(req, res) {
+    try {
+      const { start_date, end_date, user_id } = req.query;
+      const data = await dietLogReflectionService.getDietingDayOfWeek(user_id, start_date, end_date);
+      res.json({ dietingDayOfWeek: data });
+    } catch (error) {
+      res.status(500).json({ error_msg: error.message });
+    }
+  }
 }
 
 module.exports = new DietLogReflectionController();
